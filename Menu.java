@@ -10,16 +10,16 @@ public class Menu {
 
         while (true) {
             System.out.println("\n===== MENU =====");
-            System.out.println("1 – BFS");
-            System.out.println("2 – DFS");
-            System.out.println("3 – TopSort");
-            System.out.println("4 – Kruskal");
-            System.out.println("5 – Prim");
-            System.out.println("6 – Dijkstra");
-            System.out.println("7 – Bellman-Ford");
-            System.out.println("8 – Floyd-Warshall");
-            System.out.println("9 – Mostrar grafo");
-            System.out.println("0 – Sair");
+            System.out.println("1. BFS");
+            System.out.println("2. DFS");
+            System.out.println("3. TopSort");
+            System.out.println("4. Kruskal");
+            System.out.println("5. Prim");
+            System.out.println("6. Dijkstra");
+            System.out.println("7. Bellman-Ford");
+            System.out.println("8. Floyd-Warshall");
+            System.out.println("9. Mostrar grafo");
+            System.out.println("0. Sair");
             System.out.print("Escolha: ");
 
             int op = sc.nextInt();
@@ -48,3 +48,4 @@ public class Menu {
         }
     }
 }
+
