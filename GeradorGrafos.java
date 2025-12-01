@@ -1,36 +1,51 @@
 import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GeradorGrafos {
 
-    public static Grafo gerarGrafoLista(int vertices, double densidade) {
-        GrafoListaAdjacencia g = new GrafoListaAdjacencia(vertices);
-        Random r = new Random();
+    public static void gerarArestas(GrafoListaAdjacencia gLista,
+                                    GrafoMatrizAdjacencia gMatriz,
+                                    int vertices,
+                                    double densidade) {
+
+        Random rand = new Random();
+        Set<String> usadas = new HashSet<>();
+
+        // Número máximo de arestas possíveis (grafo simples NÃO direcionado)
         int maxArestas = vertices * (vertices - 1) / 2;
-        int numArestas = (int)(maxArestas * densidade);
 
-        for (int i = 0; i < numArestas; i++) {
-            int u = r.nextInt(vertices);
-            int v = r.nextInt(vertices);
-            if (u != v) {
-                g.adicionarAresta(u, v, r.nextInt(10) + 1);
-            }
+        // Quantidade de arestas a gerar conforme densidade
+        int alvo = (int) (densidade * maxArestas);
+
+        int geradas = 0;
+
+        while (geradas < alvo) {
+
+            int u = rand.nextInt(vertices);
+            int v = rand.nextInt(vertices);
+
+            if (u == v) continue;
+
+            // Garantir que não repete aresta (ex: 1-2 e 2-1)
+            String chave = Math.min(u, v) + "-" + Math.max(u, v);
+
+            if (usadas.contains(chave)) continue;
+
+            usadas.add(chave);
+
+            // Peso aleatório (1 a 20)
+            double peso = 1 + rand.nextInt(20);
+
+            // INSERE NAS DUAS REPRESENTAÇÕES
+            gLista.adicionarAresta(u, v, peso);
+            gMatriz.adicionarAresta(u, v, peso);
+
+            geradas++;
         }
-        return g;
-    }
 
-    public static Grafo gerarDigrafoLista(int vertices, double densidade) {
-        DigrafoListaAdjacencia g = new DigrafoListaAdjacencia(vertices);
-        Random r = new Random();
-        int maxArestas = vertices * (vertices - 1);
-        int numArestas = (int)(maxArestas * densidade);
-
-        for (int i = 0; i < numArestas; i++) {
-            int u = r.nextInt(vertices);
-            int v = r.nextInt(vertices);
-            if (u != v) {
-                g.adicionarAresta(u, v, r.nextInt(10) + 1);
-            }
-        }
-        return g;
+        System.out.println("Grafo gerado com " + vertices +
+                " vértices, densidade " + densidade +
+                " e " + geradas + " arestas.");
     }
 }
