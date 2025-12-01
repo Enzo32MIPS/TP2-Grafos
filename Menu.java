@@ -20,9 +20,6 @@ public class Menu {
 
         if (escolha == 1) {
 
-            System.out.print("O grafo é dirigido? (s/n): ");
-            boolean dirigido = sc.next().equalsIgnoreCase("s");
-
             System.out.print("Caminho do arquivo .gr: ");
             String caminho = sc.next();
 
@@ -55,11 +52,8 @@ public class Menu {
                 gLista.adicionarAresta(u, v, e.weight);
                 gMatriz.adicionarAresta(u, v, e.weight);
 
-                // se NÃO-dirigido, espelha
-                if (!dirigido) {
-                    gLista.adicionarAresta(v, u, e.weight);
-                    gMatriz.adicionarAresta(v, u, e.weight);
-                }
+                gLista.adicionarAresta(v, u, e.weight);
+                gMatriz.adicionarAresta(v, u, e.weight);
             }
 
         } else {
