@@ -10,7 +10,6 @@ public class GrafoMatrizAdjacencia implements Grafo {
         this.vertices = vertices;
         matriz = new double[vertices][vertices];
 
-        // 0 = sem aresta
         for (int i = 0; i < vertices; i++) {
             for (int j = 0; j < vertices; j++) {
                 matriz[i][j] = 0;
@@ -30,8 +29,7 @@ public class GrafoMatrizAdjacencia implements Grafo {
 
     @Override
     public void adicionarAresta(int origem, int destino, double peso) {
-        matriz[origem][destino] = peso;
-        matriz[destino][origem] = peso; // não dirigido
+        matriz[origem][destino] = peso;   // <-- APENAS ISSO
     }
 
     @Override

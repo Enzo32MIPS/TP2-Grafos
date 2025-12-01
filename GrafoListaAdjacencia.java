@@ -27,7 +27,6 @@ public class GrafoListaAdjacencia implements Grafo {
     @Override
     public void adicionarAresta(int origem, int destino, double peso) {
         adj.get(origem).add(new Aresta(origem, destino, peso));
-        adj.get(destino).add(new Aresta(destino, origem, peso)); // não dirigido
     }
 
     @Override

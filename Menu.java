@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
 
@@ -6,18 +6,77 @@ public class Menu {
 
         Scanner sc = new Scanner(System.in);
 
-        int vertices = 6;
-        double densidade = 0.4;
+        GrafoListaAdjacencia gLista = null;
+        GrafoMatrizAdjacencia gMatriz = null;
+        Grafo gAtual;
 
-        // O MESMO GRAFO em duas representações
-        GrafoListaAdjacencia gLista = new GrafoListaAdjacencia(vertices);
-        GrafoMatrizAdjacencia gMatriz = new GrafoMatrizAdjacencia(vertices);
+        System.out.println("===== INICIALIZAÇÃO DO GRAFO =====");
+        System.out.println("1. Carregar grafo de arquivo .gr");
+        System.out.println("2. Gerar grafo aleatório");
+        System.out.print("Escolha: ");
+        int escolha = sc.nextInt();
 
-        // GERAR ARESTAS (sincronizadas)
-        GeradorGrafos.gerarArestas(gLista, gMatriz, vertices, densidade);
+        int vertices = 0;
 
-        // Ponteiro para o grafo em uso
-        Grafo gAtual = gLista;
+        if (escolha == 1) {
+
+            System.out.print("O grafo é dirigido? (s/n): ");
+            boolean dirigido = sc.next().equalsIgnoreCase("s");
+
+            System.out.print("Caminho do arquivo .gr: ");
+            String caminho = sc.next();
+
+            System.out.print("Número total de vértices: ");
+            vertices = sc.nextInt();
+
+            // cria grafos
+            gLista = new GrafoListaAdjacencia(vertices);
+            gMatriz = new GrafoMatrizAdjacencia(vertices);
+
+            // carrega arestas usando o GraphLoader
+            List<GraphLoader.Edge> edges = GraphLoader.load(caminho);
+
+            System.out.println("Arquivo lido: " + edges.size() + " arestas.");
+
+            // insere arestas nos grafos (AGORA COM CORREÇÃO DE ÍNDICE!)
+            for (GraphLoader.Edge e : edges) {
+
+                // conversão 1-based → 0-based
+                int u = e.from - 1;
+                int v = e.to   - 1;
+
+                // segurança
+                if (u < 0 || u >= vertices || v < 0 || v >= vertices) {
+                    System.out.println("Aresta ignorada (índice fora): " + e.from + " -> " + e.to);
+                    continue;
+                }
+
+                // adiciona
+                gLista.adicionarAresta(u, v, e.weight);
+                gMatriz.adicionarAresta(u, v, e.weight);
+
+                // se NÃO-dirigido, espelha
+                if (!dirigido) {
+                    gLista.adicionarAresta(v, u, e.weight);
+                    gMatriz.adicionarAresta(v, u, e.weight);
+                }
+            }
+
+        } else {
+
+            System.out.print("Número de vértices: ");
+            vertices = sc.nextInt();
+
+            System.out.print("Densidade (0..1): ");
+            double densidade = sc.nextDouble();
+
+            gLista = new GrafoListaAdjacencia(vertices);
+            gMatriz = new GrafoMatrizAdjacencia(vertices);
+
+            GeradorGrafos.gerarArestas(gLista, gMatriz, vertices, densidade);
+        }
+
+        gAtual = gLista; // representação padrão
 
         while (true) {
 
@@ -33,8 +92,8 @@ public class Menu {
             System.out.println("8. Floyd-Warshall");
             System.out.println("9. Mostrar grafo (Lista)");
             System.out.println("10. Mostrar grafo (Matriz)");
-            System.out.println("11. Usar Lista de Adjacência");
-            System.out.println("12. Usar Matriz de Adjacência");
+            System.out.println("11. Usar Lista");
+            System.out.println("12. Usar Matriz");
             System.out.println("0. Sair");
             System.out.print("Escolha: ");
 
@@ -44,7 +103,6 @@ public class Menu {
             c.iniciar();
 
             switch (op) {
-
                 case 1: BFS.executar(gAtual, 0); break;
                 case 2: DFS.executar(gAtual, 0); break;
                 case 3: TopSort.executar(gAtual); break;
@@ -53,38 +111,15 @@ public class Menu {
                 case 6: Dijkstra.executar(gAtual, 0); break;
                 case 7: BellmanFord.executar(gAtual, 0); break;
                 case 8: FloydWarshall.executar(gAtual); break;
-
-                case 9:
-                    System.out.println("Grafo em LISTA:");
-                    gLista.imprimir();
-                    break;
-
-                case 10:
-                    System.out.println("Grafo em MATRIZ:");
-                    gMatriz.imprimir();
-                    break;
-
-                case 11:
-                    gAtual = gLista;
-                    System.out.println("Agora usando LISTA DE ADJACÊNCIA.");
-                    break;
-
-                case 12:
-                    gAtual = gMatriz;
-                    System.out.println("Agora usando MATRIZ DE ADJACÊNCIA.");
-                    break;
-
-                case 0:
-                    System.out.println("Encerrando...");
-                    System.exit(0);
-
-                default:
-                    System.out.println("Opção inválida.");
+                case 9: gLista.imprimir(); break;
+                case 10: gMatriz.imprimir(); break;
+                case 11: gAtual = gLista; break;
+                case 12: gAtual = gMatriz; break;
+                case 0: System.exit(0);
             }
 
-            if (op >= 1 && op <= 8) {
+            if (op >= 1 && op <= 8)
                 System.out.printf("Tempo: %.4f ms\n", c.tempoDecorridoMs());
-            }
         }
     }
 }
