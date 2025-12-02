@@ -17,17 +17,17 @@ public class GrafoMatrizAdjacencia implements Grafo {
         }
     }
 
-    @Override
+    
     public int getNumeroVertices() {
         return vertices;
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino) {
         adicionarAresta(origem, destino, 1.0);
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino, double peso) {
         // 1. Configura a aresta de origem para destino
     matriz[origem][destino] = peso; 
@@ -37,7 +37,6 @@ public class GrafoMatrizAdjacencia implements Grafo {
     matriz[destino][origem] = peso; // <-- CORREÇÃO PRINCIPAL
     }
 
-    @Override
     public List<Aresta> getAdjacentes(int vertice) {
         List<Aresta> lista = new ArrayList<>();
         for (int i = 0; i < vertices; i++) {
@@ -48,7 +47,6 @@ public class GrafoMatrizAdjacencia implements Grafo {
         return lista;
     }
 
-    @Override
     public void imprimir() {
         for (int i = 0; i < vertices; i++) {
             for (int j = 0; j < vertices; j++) {

@@ -3,7 +3,6 @@ import java.util.*;
 
 public class GraphLoader {
 
-    // Classe de aresta usada pelo Menu
     public static class Edge {
         public int from;
         public int to;
@@ -16,12 +15,7 @@ public class GraphLoader {
         }
     }
 
-    /**
-     * Lê arquivos .gr no formato:
-     * a u v w
-     * ou
-     * u v w
-     */
+
     public static List<Edge> load(String filePath) {
 
         List<Edge> edges = new ArrayList<>();
@@ -38,7 +32,7 @@ public class GraphLoader {
                 if (line.startsWith("p")) continue;
 
                 if (line.startsWith("a")) {
-                    line = line.substring(1).trim(); // remove 'a'
+                    line = line.substring(1).trim();
                 }
 
                 String[] parts = line.split("\\s+");

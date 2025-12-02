@@ -4,14 +4,6 @@ import java.io.IOException;
 
 public class LeitorDeArquivo {
 
-    /**
-     * Lê um arquivo .gr e constrói os grafos (lista e matriz) em paralelo.
-     *
-     * @param caminho Caminho do arquivo .gr
-     * @param gLista  Grafo em representação de lista
-     * @param gMatriz Grafo em representação de matriz
-     * @param dirigido true se o grafo for dirigido
-     */
     public static void ler(String caminho, GrafoListaAdjacencia gLista, GrafoMatrizAdjacencia gMatriz, boolean dirigido) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
@@ -21,7 +13,6 @@ public class LeitorDeArquivo {
             while ((linha = br.readLine()) != null) {
                 linha = linha.trim();
 
-                // Ignorar linhas inválidas
                 if (linha.isEmpty() || linha.startsWith("#") || linha.startsWith("p"))
                     continue;
 
@@ -32,11 +23,9 @@ public class LeitorDeArquivo {
                 int v = Integer.parseInt(partes[1]);
                 double peso = (partes.length >= 3) ? Double.parseDouble(partes[2]) : 1.0;
 
-                // Aresta u → v
                 gLista.adicionarAresta(u, v, peso);
                 gMatriz.adicionarAresta(u, v, peso);
 
-                // Se não for dirigido, espelha
                 if (!dirigido) {
                     gLista.adicionarAresta(v, u, peso);
                     gMatriz.adicionarAresta(v, u, peso);

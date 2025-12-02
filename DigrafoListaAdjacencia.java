@@ -14,27 +14,27 @@ public class DigrafoListaAdjacencia implements Grafo {
         }
     }
 
-    @Override
+    
     public int getNumeroVertices() {
         return vertices;
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino) {
         adicionarAresta(origem, destino, 1.0);
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino, double peso) {
         adj.get(origem).add(new Aresta(origem, destino, peso)); // dirigido
     }
 
-    @Override
+    
     public List<Aresta> getAdjacentes(int vertice) {
         return adj.get(vertice);
     }
 
-    @Override
+    
     public void imprimir() {
         for (int i = 0; i < vertices; i++) {
             System.out.print(i + ": ");

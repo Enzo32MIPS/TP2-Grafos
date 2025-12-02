@@ -12,10 +12,8 @@ public class GeradorGrafos {
         Random rand = new Random();
         Set<String> usadas = new HashSet<>();
 
-        // Número máximo de arestas possíveis (grafo simples NÃO direcionado)
         int maxArestas = vertices * (vertices - 1) / 2;
 
-        // Quantidade de arestas a gerar conforme densidade
         int alvo = (int) (densidade * maxArestas);
 
         int geradas = 0;
@@ -27,17 +25,14 @@ public class GeradorGrafos {
 
             if (u == v) continue;
 
-            // Garantir que não repete aresta (ex: 1-2 e 2-1)
             String chave = Math.min(u, v) + "-" + Math.max(u, v);
 
             if (usadas.contains(chave)) continue;
 
             usadas.add(chave);
 
-            // Peso aleatório (1 a 20)
             double peso = 1 + rand.nextInt(20);
 
-            // INSERE NAS DUAS REPRESENTAÇÕES
             gLista.adicionarAresta(u, v, peso);
             gMatriz.adicionarAresta(u, v, peso);
 

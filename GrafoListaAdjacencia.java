@@ -14,17 +14,16 @@ public class GrafoListaAdjacencia implements Grafo {
         }
     }
 
-    @Override
     public int getNumeroVertices() {
         return vertices;
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino) {
         adicionarAresta(origem, destino, 1.0);
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino, double peso) {
         // 1. Verifica se a aresta já existe
         for (Aresta e : adj.get(origem)) {
@@ -41,12 +40,12 @@ public class GrafoListaAdjacencia implements Grafo {
         adj.get(origem).add(new Aresta(origem, destino, peso));
     }
 
-    @Override
+    
     public List<Aresta> getAdjacentes(int vertice) {
         return adj.get(vertice);
     }
 
-    @Override
+    
     public void imprimir() {
         for (int i = 0; i < vertices; i++) {
             System.out.print(i + ": ");

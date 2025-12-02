@@ -7,6 +7,6 @@ public class Cronometro {
 
     public double tempoDecorridoMs() {
         long fim = System.nanoTime();
-        return (fim - inicio) / 1_000_000.0; // milissegundos
+        return (fim - inicio) / 1_000_000.0; 
     }
 }

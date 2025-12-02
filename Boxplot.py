@@ -2,10 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-# === 1. Carregar CSV corretamente (separado por ;) ===
 df = pd.read_csv("resultados.csv", sep=";")
 
-# === 2. Corrigir coluna tempo_ms (trocar vírgula por ponto) ===
 df["tempo_ms"] = (
     df["tempo_ms"]
     .astype(str)
@@ -13,17 +11,14 @@ df["tempo_ms"] = (
     .astype(float)
 )
 
-# === 3. Listar arquivos únicos ===
 arquivos = df["arquivo"].unique()
 
-# === 4. Criar pasta de saída ===
 os.makedirs("boxplots", exist_ok=True)
 
-# === 5. Gerar gráficos ===
 for arquivo in arquivos:
     df_arq = df[df["arquivo"] == arquivo]
     
-    # ——— LISTA ———
+    # lista
     df_lista = df_arq[df_arq["estrutura"] == "LISTA"]
     if not df_lista.empty:
         plt.figure(figsize=(10, 6))
@@ -36,7 +31,7 @@ for arquivo in arquivos:
         plt.savefig(f"boxplots/{arquivo}_LISTA.png", dpi=300)
         plt.close()
 
-    # ——— MATRIZ ———
+    # matriz
     df_matriz = df_arq[df_arq["estrutura"] == "MATRIZ"]
     if not df_matriz.empty:
         plt.figure(figsize=(10, 6))

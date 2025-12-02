@@ -11,22 +11,22 @@ public class DigrafoMatrizAdjacencia implements Grafo {
         matriz = new double[vertices][vertices];
     }
 
-    @Override
+    
     public int getNumeroVertices() {
         return vertices;
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino) {
         adicionarAresta(origem, destino, 1.0);
     }
 
-    @Override
+    
     public void adicionarAresta(int origem, int destino, double peso) {
         matriz[origem][destino] = peso;
     }
 
-    @Override
+    
     public List<Aresta> getAdjacentes(int vertice) {
         List<Aresta> lista = new ArrayList<>();
         for (int i = 0; i < vertices; i++) {
@@ -37,7 +37,7 @@ public class DigrafoMatrizAdjacencia implements Grafo {
         return lista;
     }
 
-    @Override
+    
     public void imprimir() {
         for (int i = 0; i < vertices; i++) {
             for (int j = 0; j < vertices; j++) {

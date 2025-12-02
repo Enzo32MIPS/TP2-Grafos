@@ -30,15 +30,12 @@ public class TestRunnerAutomatizado {
 
             System.out.println("\n=== Processando arquivo: " + file.getName() + " ===");
 
-            // Deduz número de vértices
             int vertices = deduzNumeroVerticesDoNome(file.getName());
             System.out.println("Número de vértices detectado: " + vertices);
 
-            // Cria grafos
             GrafoListaAdjacencia gLista = new GrafoListaAdjacencia(vertices);
             GrafoMatrizAdjacencia gMatriz = new GrafoMatrizAdjacencia(vertices);
 
-            // Carrega arestas
             List<GraphLoader.Edge> edges = GraphLoader.load(file.getAbsolutePath());
             for (GraphLoader.Edge e : edges) {
                 int u = e.from - 1;
@@ -51,12 +48,8 @@ public class TestRunnerAutomatizado {
                 gMatriz.adicionarAresta(v, u, e.weight);
             }
 
-            // Agora testar algoritmos
             for (String algoritmo : ALGORITMOS) {
 
-                // ---------------------------
-                // Testes na representação LISTA
-                // ---------------------------
                 for (int r = 1; r <= REPETICOES; r++) {
                     double tempo = executarAlgoritmo(algoritmo, gLista);
                     csv.printf("%s;%s;LISTA;%d;%.4f%n", file.getName(), algoritmo, r, tempo);
@@ -64,9 +57,6 @@ public class TestRunnerAutomatizado {
                             file.getName(), algoritmo, r, tempo);
                 }
 
-                // ---------------------------
-                // Testes na representação MATRIZ
-                // ---------------------------
                 for (int r = 1; r <= REPETICOES; r++) {
                     double tempo = executarAlgoritmo(algoritmo, gMatriz);
                     csv.printf("%s;%s;MATRIZ;%d;%.4f%n", file.getName(), algoritmo, r, tempo);
@@ -80,7 +70,6 @@ public class TestRunnerAutomatizado {
         System.out.println("\n=== Testes finalizados. CSV salvo em resultados.csv ===");
     }
 
-    // Executa um algoritmo e retorna tempo em ms
     private static double executarAlgoritmo(String algoritmo, Grafo g) {
         Cronometro c = new Cronometro();
         c.iniciar();
@@ -96,7 +85,6 @@ public class TestRunnerAutomatizado {
         return c.tempoDecorridoMs();
     }
 
-    // Extrai o número de vértices do nome (sampleXXXX-YYY.gr)
     private static int deduzNumeroVerticesDoNome(String nomeArquivo) {
         try {
             int inicio = nomeArquivo.indexOf("sample") + "sample".length();
