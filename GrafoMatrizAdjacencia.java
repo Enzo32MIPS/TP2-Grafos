@@ -29,7 +29,12 @@ public class GrafoMatrizAdjacencia implements Grafo {
 
     @Override
     public void adicionarAresta(int origem, int destino, double peso) {
-        matriz[origem][destino] = peso;   // <-- APENAS ISSO
+        // 1. Configura a aresta de origem para destino
+    matriz[origem][destino] = peso; 
+    
+    // 2. CONFIGURA A ARESTA DE DESTINO PARA ORIGEM
+    // Isso garante a simetria, que é a característica de um grafo não dirigido.
+    matriz[destino][origem] = peso; // <-- CORREÇÃO PRINCIPAL
     }
 
     @Override
