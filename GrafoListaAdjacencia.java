@@ -26,6 +26,18 @@ public class GrafoListaAdjacencia implements Grafo {
 
     @Override
     public void adicionarAresta(int origem, int destino, double peso) {
+        // 1. Verifica se a aresta já existe
+        for (Aresta e : adj.get(origem)) {
+            if (e.destino == destino) {
+                // Se já existe, atualiza o peso APENAS se o novo peso for menor
+                if (peso < e.peso) {
+                    e.peso = peso; // Atualiza para o novo peso mínimo
+                }
+                return; // Aresta tratada, encerra o método
+            }
+        }
+    
+        // 2. Se a aresta não existe, adiciona normalmente
         adj.get(origem).add(new Aresta(origem, destino, peso));
     }
 

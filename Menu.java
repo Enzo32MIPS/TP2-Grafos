@@ -37,23 +37,23 @@ public class Menu {
 
             // insere arestas nos grafos (AGORA COM CORREÇÃO DE ÍNDICE!)
             for (GraphLoader.Edge e : edges) {
-
                 // conversão 1-based → 0-based
                 int u = e.from - 1;
-                int v = e.to   - 1;
+                int v = e.to - 1;
 
-                // segurança
+                // segurança (deixei seu bloco de segurança)
                 if (u < 0 || u >= vertices || v < 0 || v >= vertices) {
                     System.out.println("Aresta ignorada (índice fora): " + e.from + " -> " + e.to);
                     continue;
                 }
-
-                // adiciona
+            
+                // Adiciona apenas a aresta ORIGINAL (u -> v)
                 gLista.adicionarAresta(u, v, e.weight);
                 gMatriz.adicionarAresta(u, v, e.weight);
-
-                gLista.adicionarAresta(v, u, e.weight);
-                gMatriz.adicionarAresta(v, u, e.weight);
+            
+                // REMOVA OU COMENTE AS LINHAS QUE CRIAM A ARESTA REVERSA:
+                // gLista.adicionarAresta(v, u, e.weight); 
+                // gMatriz.adicionarAresta(v, u, e.weight);
             }
 
         } else {
